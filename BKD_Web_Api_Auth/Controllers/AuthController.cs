@@ -73,7 +73,8 @@ namespace BKD_Web_Api_Auth.Controllers
         {
             List<Claim> claims = new List<Claim>()  //Claims are information stored in the token describing the user that is authenticated i.e. could be username or ID or email etc. 
             {
-                new Claim(ClaimTypes.Name, u.Username)
+                new Claim(ClaimTypes.Name, u.Username),
+                new Claim(ClaimTypes.Role, "Admin")
             };
 
             var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(_config.GetSection("AppSettings:Token").Value));

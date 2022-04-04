@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ namespace BKD_Web_Api_Auth.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [Authorize] //requires that anyone requesting access to this controller and its properties/methods be authorized
     public class WeatherForecastController : ControllerBase
     {
         private static readonly string[] Summaries = new[]
@@ -23,7 +25,7 @@ namespace BKD_Web_Api_Auth.Controllers
             _logger = logger;
         }
 
-        [HttpGet]
+        [HttpGet(Name = "GetWeatherForecast"), Authorize(Roles ="Admin")] //can use AllowAnonymous to allow an unauthorized user access to the controller. 
         public IEnumerable<WeatherForecast> Get()
         {
             var rng = new Random();
